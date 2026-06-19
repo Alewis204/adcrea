@@ -150,7 +150,11 @@ export async function handleWebhookEvent(event: WebhookEvent): Promise<void> {
   }
 }
 
+let stripeClient: any = null;
+
 async function getStripeClient(): Promise<any> {
+  if (stripeClient) return stripeClient;
   const { default: Stripe } = await import('stripe');
-  return new Stripe(config.stripe.secretKey, { apiVersion: '2025-03-31' as any });
+  stripeClient = new Stripe(config.stripe.secretKey);
+  return stripeClient;
 }

@@ -116,7 +116,7 @@ router.post('/webhook', async (req: Request, res: Response) => {
 
     if (config.stripe.webhookSecret && sig) {
       const { default: Stripe } = await import('stripe');
-      const stripe = new Stripe(config.stripe.secretKey, { apiVersion: '2025-03-31' as any });
+      const stripe = new Stripe(config.stripe.secretKey);
       event = stripe.webhooks.constructEvent(rawBody, sig, config.stripe.webhookSecret);
     } else {
       // Mock mode - parse directly
